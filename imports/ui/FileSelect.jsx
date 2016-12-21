@@ -21,8 +21,9 @@ export default class FileSelect extends Component {
       this.fileName.value = file.name;
 
       // Only process csv files.
-      if (!file.type.match('text/csv'))
-        alert('csv file expected');
+      // Uncomment after tested on windows
+      //if (!file.type.match('text/csv'))
+        //alert('csv file expected');
 
       // Pass result to caller as file is loaded
       reader.onload = (event) => {
