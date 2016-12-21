@@ -24,11 +24,12 @@ Meteor.methods({
       if (isNaN(intId))
         return;
 
+      // Map employees
       if (!persons.has(userId)) {
         persons.set(userId, {userId, userName});
       }
 
-      // Store
+      // Store raw shifts for future use
       const id = Shifts.insert({
         userName,
         userId,
@@ -44,6 +45,7 @@ Meteor.methods({
     // Calculate daily wages
     const dailyWages = new Map();
 
+    // Group by person & date
     workShifts.forEach(v => {
       if (!dailyWages.has(v.id)) {
         dailyWages.set(v.id, {
@@ -63,6 +65,7 @@ Meteor.methods({
       dailyWages.set(v.id, person);
     });
 
+    // Store calculated wages per day
     for (const [userId, data] of dailyWages) {
       const employee = persons.get(userId);
 
